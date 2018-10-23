@@ -1,0 +1,20 @@
+{
+  "ped-match": {
+    "report": {
+      "bucket": "cucumber-test-reports",
+      "days_to_keep": 10
+    }
+  },
+  "adult-match": {
+    "report": {
+      "bucket": "adultmatch-test-reports",
+      "days_to_keep": 10
+    }
+  },
+  "ctrp": {
+    "report": {
+      "bucket": "ctrp-test-reports",
+      "days_to_keep": 10
+    }
+  }
+}

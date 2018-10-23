@@ -1,0 +1,8 @@
+{
+  "demo-project": {
+    "report": {
+      "bucket": "ctrp-test-reports",
+      "days_to_keep": 10
+    }
+  }
+}

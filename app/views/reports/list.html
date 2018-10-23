@@ -1,0 +1,28 @@
+<div ng-controller="ReportsController">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody ng-if="!isLoading">
+            <tr ng-repeat="item in reports">
+                <td>
+                    <h5>{{item.date}}</h5>
+                    <h6 ng-repeat="(type, modules) in item.details">
+                        <span>{{type}}:&nbsp;&nbsp;&nbsp;</span><span ng-repeat="(serviceName, stats) in modules"><a href="report/ped-match/{{item.date}}/{{type}}/{{serviceName}}" target="_blank">{{serviceName}}<span ng-if="hasStats(stats)"> (<span class="service-stats-passed">{{stats.passed || '0'}}</span>/<span class="service-stats-failed">{{stats.failed || '0'}}</span>)</span></a>{{$last?'':'&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;'}}</span>
+                        
+                        <span ng-if="!modules" class="text-muted">none</span>
+                    </h6>
+                </td>
+            </tr>
+        </tbody>
+        <tbody ng-if="isLoading">
+            <tr>
+                <td>
+                    <h5>Loading...</h5>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

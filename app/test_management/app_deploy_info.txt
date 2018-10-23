@@ -1,0 +1,112 @@
+{
+  "nci-match-patient-api": {
+    "project": "ped-match",
+    "dock_deployments": [
+      {
+        "tier": "int",
+        "need_login_to_docker": false,
+        "group": "silintl/ecs-deploy",
+        "cluster": "PedMatch-IntTest-Backend",
+        "service_name": "PedMatch-nci-match-patient-api-INTTEST",
+        "image_name": "fnlcr/nci-match-patient-api:<version>"
+      }
+    ],
+    "lambda_deployments": [
+
+    ]
+  },
+  "ctrp-trials-ec-lambda": {
+    "project": "ctrp",
+    "dock_deployments": [
+
+    ],
+    "lambda_deployments": [
+      {
+        "zip_s3_bucket": "ctrp-lambda-hub",
+        "zip_name": "ctrp-trials-ec-lambda:<version>.zip",
+        "function_name": "ctrp-trials-ec-lambda",
+        "function_description": "ctrp-trials-ec-lambda version:<version>, Updated by BDD test"
+      }
+    ]
+  },
+  "nci-match-patient-state-api": {
+    "project": "ped-match",
+    "dock_deployments": [
+      {
+        "tier": "int",
+        "need_login_to_docker": false,
+        "group": "silintl/ecs-deploy",
+        "cluster": "PedMatch-IntTest-Backend",
+        "service_name": "PedMatch-nci-match-patient-state-api-INTTEST",
+        "image_name": "fnlcr/nci-match-patient-state-api:<version>"
+      }
+    ],
+    "lambda_deployments": [
+
+    ]
+  },
+  "nci-match-patient-processor": {
+    "project": "ped-match",
+    "dock_deployments": [
+      {
+        "tier": "int",
+        "need_login_to_docker": false,
+        "group": "silintl/ecs-deploy",
+        "cluster": "PedMatch-IntTest-Backend",
+        "service_name": "PedMatch-nci-match-patient-processor-INTTEST",
+        "image_name": "fnlcr/nci-match-patient-processor:<version>"
+      }
+    ],
+    "lambda_deployments": [
+
+    ]
+  },
+  "nci-match-rules": {
+    "project": "ped-match",
+    "dock_deployments": [
+      {
+        "tier": "int",
+        "need_login_to_docker": false,
+        "group": "silintl/ecs-deploy",
+        "cluster": "PedMatch-IntTest-Backend",
+        "service_name": "PedMatch-nci-match-rules-INTTEST",
+        "image_name": "fnlcr/nci-match-rules:<version>"
+      }
+    ],
+    "lambda_deployments": [
+
+    ]
+  },
+  "nci-treatment-arm-api": {
+    "project": "ped-match",
+    "dock_deployments": [
+      {
+        "tier": "int",
+        "need_login_to_docker": false,
+        "group": "silintl/ecs-deploy",
+        "cluster": "PedMatch-IntTest-Backend",
+        "service_name": "PedMatch-nci-treatment-arm-api-INTTEST",
+        "image_name": "fnlcr/nci-treatment-arm-api:<version>"
+      }
+    ],
+    "lambda_deployments": [
+
+    ]
+  },
+  "nci-treatment-arm-processor-api": {
+    "project": "ped-match",
+    "dock_deployments": [
+      {
+        "tier": "int",
+        "need_login_to_docker": false,
+        "group": "silintl/ecs-deploy",
+        "cluster": "PedMatch-IntTest-Backend",
+        "service_name": "PedMatch-nci-treatment-arm-processor-api-INTTEST",
+        "image_name": "fnlcr/nci-treatment-arm-processor-api:<version>"
+      }
+    ],
+    "lambda_deployments": [
+
+    ]
+  }
+}

@@ -1,0 +1,53 @@
+# whitelist
+branches:
+  only:
+    - master
+sudo: required
+services: 
+  - docker
+language: ruby
+rvm:
+  - 2.3.1
+before_install:
+  - gem install bundler
+  #Set up Docker exports
+  - echo $TRAVIS_BUILD_DIR
+  - export AUTHOR=`git --no-pager show -s --format='%an <%ae>'`
+  - export DATE=`TZ=America/New_York date "+%m-%d-%y-%H%M"`
+  #- export DOCKER_IMAGE="fnlcr/nci-match-test-management"
+  - export DOCKER_IMAGE="fnlcr/test-management"
+
+  - echo "TravisBuild=$TRAVIS_BUILD_NUMBER" > build_number.html &&
+        echo "Commit=$TRAVIS_COMMIT" >> build_number.html       &&
+        echo "TravisBuildID=$TRAVIS_BUILD_ID" >> build_number.html    &&
+        echo "Author=$AUTHOR" >> build_number.html              &&
+        echo "BuildTime=$DATE" >> build_number.html             &&
+        echo "Docker=$DOCKER_IMAGE:$DATE" >> build_number.html
+  - cat ./build_number.html
+install:
+  - bundle install
+script:
+#  - RAILS_ENV=test bundle exec rspec spec/
+  - RAILS_ENV=test bundle
+    #Build Docker image
+  - docker build -t $DOCKER_IMAGE:$DATE -t $DOCKER_IMAGE:latest .
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+
+after_success:
+#  - bundle exec codeclimate-test-reporter
+  - docker images
+  - docker push $DOCKER_IMAGE # Pushes both date and latest
+  #Deploy to AWS IntTest
+  - docker run -it --rm -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+    -e AWS_DEFAULT_REGION=us-east-1 silintl/ecs-deploy
+    --cluster PedMatch-IntTest-Backend --service-name PedMatch-nci-match-test-management-INTTEST 
+    -i $DOCKER_IMAGE:$DATE
+#  #Trigger Travis bdd tests
+#  - curl -s -X POST -H "Content-Type:application/json" -H "Accept:application/json" -H "Travis-API-Version:3" -H "Authorization:token $TRAVIS_TOKEN" -d "{\"request\":{\"message\":\"Triggered by test-management $TRAVIS_COMMIT\", \"branch\":\"master\", \"config\":{\"env\":{\"matrix\":[\"TRIGGER_REPO=test-management;TRIGGER_VER=$DATE;CUC_TAG=@patients;AUTHOR=$AUTHOR\"]}}}}" https://api.travis-ci.com/repo/BIAD%2Fnci-uMatch-bddtests/requests
+
+notifications:
+  slack: clinicalbiomed:gRp5LqKElNOjUUMPLlq4qC1j
+
+#addons:
+#  code_climate:
+#        repo_token: 315397858a16795b46b5815b0a7a5ae5886bd1651bb0b4651e253fb6684be99a
